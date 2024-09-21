@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.videocall.dao.FriendDao">
+
+    <select id="listFriends" resultType="com.example.videocall.pojo.User">
+        select b.image,b.id,b.username from
+            friend  as `a`
+                JOIN user as `b`
+                     ON a.fid = b.id
+        where a.uid = #{id}
+    </select>
+
+<!--    搜索好友列表-->
+<!--    searchFriends-->
+    <select id="searchFriends" resultType="com.example.videocall.pojo.User">
+        SELECT * FROM user WHERE username LIKE CONCAT('%', #{username},'%')
+
+    </select>
+
+
+<!--    添加好友-->
+<!--    addUserPass-->
+    <insert id="addUserPass" parameterType="com.example.videocall.pojo.Friend">
+        INSERT INTO friend (uid, fid) VALUES (#{uid}, #{fid})
+    </insert>
+</mapper>

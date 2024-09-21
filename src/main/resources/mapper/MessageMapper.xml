@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.videocall.dao.MessageDao">
+<!--获取聊天消息-->
+<!--    Chatlist-->
+    <select id="Chatlist" resultType="Map">
+        SELECT m.*,
+               u_from.image AS from_image,
+               u_to.image AS to_image
+        FROM message m
+                 LEFT JOIN user u_from ON m.from_id = u_from.id  -- 获取发送者的头像
+                 LEFT JOIN user u_to ON m.to_id = u_to.id        -- 获取接收者的头像
+        WHERE (m.from_id = #{to} AND m.to_id = #{id})   -- 查询 id 发送给 to 的消息
+           OR (m.from_id = #{id} AND m.to_id = #{to})   -- 查询 to 发送给 id 的消息
+
+    </select>
+
+</mapper>
