@@ -72,13 +72,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void answer(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",7); // 回应通话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             obj.put("message",map.get("message"));
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
@@ -87,13 +87,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void candidate(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",8); // 回应通话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             obj.put("message",map.get("message"));
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
@@ -102,13 +102,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void getoff(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",6); // 回应通话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             obj.put("message",map.get("message"));
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
@@ -118,13 +118,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
 
 
     private void askoff(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",5); // 回应通话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
             System.out.println("未登录");
@@ -132,13 +132,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void response(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",4); // 回应通话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
             System.out.println("未登录");
@@ -146,13 +146,13 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void call(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",3); // 对话
             obj.put("uuid", UUID.randomUUID().toString());
-            obj.put("from",map.get("uid").toString());
+            obj.put("from_id",map.get("uid").toString());
             channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(obj)));
         }else {
             System.out.println("未登录");
@@ -160,9 +160,9 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void send(Map map) {
-        String to = map.get("to").toString();
-        if (cmap.containsKey("user"+to)){
-            Channel channel = cmap.get("user" + to);
+        String to_id = map.get("to_id").toString();
+        if (cmap.containsKey("user"+to_id)){
+            Channel channel = cmap.get("user" + to_id);
             Map<String,Object> obj = new HashMap<>();
             obj.put("type",2); // 对话
             obj.put("uuid", UUID.randomUUID().toString());
@@ -173,6 +173,7 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
     }
 
     private void websocketLogin(Map map,ChannelHandlerContext ctx) {
+        System.out.println("map = "+ map);
         String uid = map.get("uid").toString();
         cmap.put("user"+uid,ctx.channel());
         System.out.println(uid+"登录");

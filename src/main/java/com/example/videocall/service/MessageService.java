@@ -26,4 +26,14 @@ public class MessageService
         List<Message> list= messageDao.Chatlist(user.getId(), to);
         return ResponseUtils.ok(list);
     }
+
+    /**
+     * 发送消息
+     * @param message
+     * @return
+     */
+    public Object send(Message message) {
+        messageDao.send(message);
+        return ResponseUtils.ok();
+    }
 }

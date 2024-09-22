@@ -1,13 +1,11 @@
 package com.example.videocall.controller;
 
 import com.example.videocall.annotaion.LoginUser;
+import com.example.videocall.pojo.Message;
 import com.example.videocall.pojo.User;
 import com.example.videocall.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/messages")
@@ -30,8 +28,10 @@ public class MessageController {
      * @param message
      * @return
      */
-//    @PostMapping("/send")
-//    public Object send(String message) {
-//        return messageService.send(message);
-//    }
+    @PostMapping("/send")
+    public Object send(@LoginUser User user, @RequestBody Message message) {
+        System.out.println("message = " + message);
+        message.setFrom_id(user.getId());
+        return messageService.send(message);
+    }
 }

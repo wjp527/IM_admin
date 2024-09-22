@@ -17,4 +17,13 @@
 
     </select>
 
+
+<!--    发送消息-->
+<!--    send-->
+<!--    (#{from_id}, #{to_id}, #{content},#{type}, NOW()): 字段与数据库的字段保持一致-->
+
+    <insert id="send" parameterType="com.example.videocall.pojo.Message">
+        INSERT INTO message (from_id, to_id, content, type,time)
+        VALUES (#{from_id}, #{to_id}, #{content},#{type}, NOW())
+    </insert>
 </mapper>

@@ -14,4 +14,11 @@ public interface MessageDao {
      * @return
      */
     List<Message> Chatlist(@Param("id") Long id, @Param("to") Long to);
+
+    /**
+     * 发送消息
+     * @param message
+     * @return
+     */
+    int send(Message message);
 }
