@@ -54,16 +54,16 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
             case "4":   // 对方回应通话
                 response(map);
                 break;
-            case "5":   //传递请求off
+            case "5":   // 摄像头打开了 传递请求off
                 askoff(map);
                 break;
             case "6":   //获取off
                 getoff(map);
                 break;
-            case "7":
+            case "7": //回应请求off
                 answer(map);
                 break;
-            case "8":
+            case "8": //
                 candidate(map);
                 break;
         }
@@ -71,6 +71,7 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
 //        channelGroup.writeAndFlush(new TextWebSocketFrame("aaabbb"));
     }
 
+    // 回应通话
     private void answer(Map map) {
         String to_id = map.get("to_id").toString();
         if (cmap.containsKey("user"+to_id)){
@@ -86,6 +87,7 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
         }
     }
 
+    // 传递candidate
     private void candidate(Map map) {
         String to_id = map.get("to_id").toString();
         if (cmap.containsKey("user"+to_id)){
@@ -118,6 +120,7 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
 
 
     private void askoff(Map map) {
+        System.out.println("55map = " +map);
         String to_id = map.get("to_id").toString();
         if (cmap.containsKey("user"+to_id)){
             Channel channel = cmap.get("user" + to_id);
@@ -131,6 +134,7 @@ public class CoordinationSocketHandler extends SimpleChannelInboundHandler<TextW
         }
     }
 
+    // 对方回应通话
     private void response(Map map) {
         String to_id = map.get("to_id").toString();
         if (cmap.containsKey("user"+to_id)){
